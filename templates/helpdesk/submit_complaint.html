@@ -1,0 +1,46 @@
+<!-- 
+File: templates/helpdesk/submit_complaint.html
+CREATE this file in templates/helpdesk/ folder
+-->
+
+{% extends 'helpdesk/base.html' %}
+
+{% block title %}Submit Complaint{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="form-container">
+        <h2>Submit a Complaint</h2>
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="subject">Subject:</label>
+                <input type="text" name="subject" id="subject" required>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category:</label>
+                <select name="category" id="category" required>
+                    <option value="">Select Category</option>
+                    <option value="health">Health Services</option>
+                    <option value="education">Education</option>
+                    <option value="housing">Housing</option>
+                    <option value="employment">Employment</option>
+                    <option value="pension">Pension</option>
+                    <option value="infrastructure">Infrastructure</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea name="description" id="description" rows="6" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit Complaint</button>
+            <a href="{% url 'my_complaints' %}" class="btn btn-secondary">View My Complaints</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+<!-- 
+File: templates/helpdesk/scheme_detail.html
+CREATE this file in templates/helpdesk/ folder
+-->
+
+{% extends 'helpdesk/base.html' %}
+
+{% block title %}{{ scheme.title }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="detail-page">
+        <a href="{% url 'schemes_list' %}" class="back-link">← Back to Schemes</a>
+        
+        <div class="detail-header">
+            <span class="scheme-badge">{{ scheme.get_category_display }}</span>
+            <h1>{{ scheme.title }}</h1>
+        </div>
+
+        <div class="detail-content">
+            <section>
+                <h2>Description</h2>
+                <p>{{ scheme.description }}</p>
+            </section>
+
+            <section>
+                <h2>Eligibility Criteria</h2>
+                <p>{{ scheme.eligibility }}</p>
+            </section>
+
+            <section>
+                <h2>Benefits</h2>
+                <p>{{ scheme.benefits }}</p>
+            </section>
+
+            <section>
+                <h2>How to Apply</h2>
+                <p>{{ scheme.how_to_apply }}</p>
+            </section>
+
+            {% if scheme.official_link %}
+            <section>
+                <h2>Official Link</h2>
+                <a href="{{ scheme.official_link }}" target="_blank" class="btn btn-primary">Visit Official Website →</a>
+            </section>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

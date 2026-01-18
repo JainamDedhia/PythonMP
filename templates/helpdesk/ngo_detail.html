@@ -1,0 +1,39 @@
+<!-- 
+File: templates/helpdesk/ngo_detail.html
+CREATE this file in templates/helpdesk/ folder
+-->
+
+{% extends 'helpdesk/base.html' %}
+
+{% block title %}{{ ngo.name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="detail-page">
+        <a href="{% url 'ngo_list' %}" class="back-link">← Back to NGO Directory</a>
+        
+        <div class="detail-header">
+            <h1>{{ ngo.name }}</h1>
+            <span class="area-badge">{{ ngo.area_of_work }}</span>
+        </div>
+
+        <div class="detail-content">
+            <section>
+                <h2>About</h2>
+                <p>{{ ngo.description }}</p>
+            </section>
+
+            <section>
+                <h2>Contact Information</h2>
+                <p><strong>Contact Person:</strong> {{ ngo.contact_person }}</p>
+                <p><strong>Email:</strong> <a href="mailto:{{ ngo.email }}">{{ ngo.email }}</a></p>
+                <p><strong>Phone:</strong> {{ ngo.phone }}</p>
+                <p><strong>Address:</strong> {{ ngo.address }}</p>
+                {% if ngo.website %}
+                <p><strong>Website:</strong> <a href="{{ ngo.website }}" target="_blank">{{ ngo.website }}</a></p>
+                {% endif %}
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}

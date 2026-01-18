@@ -1,0 +1,32 @@
+<!-- 
+File: templates/helpdesk/office_list.html
+CREATE this file in templates/helpdesk/ folder
+-->
+
+{% extends 'helpdesk/base.html' %}
+
+{% block title %}Government Offices{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Government Offices Directory</h1>
+    <p>Locate and contact relevant government departments</p>
+
+    <div class="card-grid">
+        {% for office in offices %}
+        <div class="info-card">
+            <h3>{{ office.name }}</h3>
+            <p class="area-badge">{{ office.department }}</p>
+            <div class="contact-info">
+                <p>📧 {{ office.email }}</p>
+                <p>📞 {{ office.phone }}</p>
+                <p>🕐 {{ office.office_hours }}</p>
+            </div>
+            <a href="{% url 'office_detail' office.pk %}" class="btn btn-primary">View Details</a>
+        </div>
+        {% empty %}
+        <p>No government offices listed yet.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

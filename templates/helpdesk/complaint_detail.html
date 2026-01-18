@@ -1,0 +1,50 @@
+<!-- 
+File: templates/helpdesk/complaint_detail.html
+CREATE this file in templates/helpdesk/ folder
+-->
+
+{% extends 'helpdesk/base.html' %}
+
+{% block title %}Complaint Details{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="detail-page">
+        <a href="{% url 'my_complaints' %}" class="back-link">← Back to My Complaints</a>
+        
+        <div class="detail-header">
+            <h1>{{ complaint.subject }}</h1>
+            <span class="status-badge status-{{ complaint.status }}">{{ complaint.get_status_display }}</span>
+        </div>
+
+        <div class="detail-content">
+            <section>
+                <h2>Complaint Information</h2>
+                <p><strong>Category:</strong> {{ complaint.category }}</p>
+                <p><strong>Submitted On:</strong> {{ complaint.created_at|date:"F d, Y - h:i A" }}</p>
+                <p><strong>Last Updated:</strong> {{ complaint.updated_at|date:"F d, Y - h:i A" }}</p>
+            </section>
+
+            <section>
+                <h2>Description</h2>
+                <p>{{ complaint.description }}</p>
+            </section>
+
+            {% if complaint.response %}
+            <section>
+                <h2>Official Response</h2>
+                <div class="response-box">
+                    <p>{{ complaint.response }}</p>
+                </div>
+            </section>
+            {% else %}
+            <section>
+                <div class="info-box">
+                    <p>Your complaint is being reviewed. You will receive a response soon.</p>
+                </div>
+            </section>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

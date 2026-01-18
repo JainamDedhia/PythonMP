@@ -1,0 +1,70 @@
+<!-- 
+File: templates/helpdesk/dashboard.html
+CREATE this file in templates/helpdesk/ folder
+-->
+
+{% extends 'helpdesk/base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Welcome, {{ user.username }}!</h1>
+    
+    <div class="stats">
+        <div class="stat-card">
+            <h3>{{ total_complaints }}</h3>
+            <p>Total Complaints</p>
+        </div>
+        <div class="stat-card">
+            <h3>{{ pending_complaints }}</h3>
+            <p>Pending</p>
+        </div>
+        <div class="stat-card">
+            <h3>{{ resolved_complaints }}</h3>
+            <p>Resolved</p>
+        </div>
+    </div>
+
+    <section>
+        <h2>Recent Complaints</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for complaint in recent_complaints %}
+                    <tr>
+                        <td>{{ complaint.subject }}</td>
+                        <td>
+                            <span class="status-badge status-{{ complaint.status }}">
+                                {{ complaint.get_status_display }}
+                            </span>
+                        </td>
+                        <td>{{ complaint.created_at|date:"M d, Y" }}</td>
+                        <td>
+                            <a href="{% url 'complaint_detail' complaint.pk %}" class="btn-link">View</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" style="text-align: center;">No complaints yet</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <div style="margin-top: 2rem;">
+        <a href="{% url 'submit_complaint' %}" class="btn btn-primary">Submit New Complaint</a>
+        <a href="{% url 'my_complaints' %}" class="btn btn-secondary">View All Complaints</a>
+    </div>
+</div>
+{% endblock %}

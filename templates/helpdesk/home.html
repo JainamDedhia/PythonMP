@@ -1,0 +1,83 @@
+<!-- 
+File: templates/helpdesk/home.html
+CREATE this file in templates/helpdesk/ folder
+-->
+
+{% extends 'helpdesk/base.html' %}
+
+{% block content %}
+<div class="hero">
+    <div class="container">
+        <h1>Welcome to Digital Welfare Help Desk</h1>
+        <p>Discover government schemes, submit complaints, and connect with support organizations</p>
+        <div class="hero-buttons">
+            <a href="{% url 'schemes_list' %}" class="btn btn-primary">Browse Schemes</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'submit_complaint' %}" class="btn btn-secondary">Submit Complaint</a>
+            {% else %}
+                <a href="{% url 'register' %}" class="btn btn-secondary">Get Started</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <section class="stats">
+        <div class="stat-card">
+            <h3>{{ total_schemes }}</h3>
+            <p>Welfare Schemes</p>
+        </div>
+        <div class="stat-card">
+            <h3>{{ total_ngos }}</h3>
+            <p>NGO Partners</p>
+        </div>
+        <div class="stat-card">
+            <h3>24/7</h3>
+            <p>Support Available</p>
+        </div>
+    </section>
+
+    <section class="features">
+        <h2>Our Services</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>📋 Welfare Schemes</h3>
+                <p>Explore and apply for various government welfare programs tailored to your needs</p>
+                <a href="{% url 'schemes_list' %}">View Schemes →</a>
+            </div>
+            <div class="feature-card">
+                <h3>📢 Submit Complaints</h3>
+                <p>Report issues and track their resolution through our transparent system</p>
+                <a href="{% url 'submit_complaint' %}">File Complaint →</a>
+            </div>
+            <div class="feature-card">
+                <h3>🤝 NGO Directory</h3>
+                <p>Connect with NGOs working to support citizens in your area</p>
+                <a href="{% url 'ngo_list' %}">Find NGOs →</a>
+            </div>
+            <div class="feature-card">
+                <h3>🏢 Government Offices</h3>
+                <p>Locate and contact relevant government departments and offices</p>
+                <a href="{% url 'office_list' %}">View Offices →</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="recent-schemes">
+        <h2>Featured Welfare Schemes</h2>
+        <div class="scheme-grid">
+            {% for scheme in schemes %}
+            <div class="scheme-card">
+                <span class="scheme-badge">{{ scheme.get_category_display }}</span>
+                <h3>{{ scheme.title }}</h3>
+                <p>{{ scheme.description|truncatewords:20 }}</p>
+                <a href="{% url 'scheme_detail' scheme.pk %}" class="btn-link">Learn More →</a>
+            </div>
+            {% endfor %}
+        </div>
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="{% url 'schemes_list' %}" class="btn btn-primary">View All Schemes</a>
+        </div>
+    </section>
+</div>
+{% endblock %}

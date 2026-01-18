@@ -1,0 +1,37 @@
+<!-- 
+File: templates/helpdesk/schemes_list.html
+CREATE this file in templates/helpdesk/ folder
+-->
+
+{% extends 'helpdesk/base.html' %}
+
+{% block title %}Welfare Schemes{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Government Welfare Schemes</h1>
+    
+    <div class="filter-section">
+        <h3>Filter by Category:</h3>
+        <div class="category-filters">
+            <a href="{% url 'schemes_list' %}" class="filter-btn {% if not selected_category %}active{% endif %}">All</a>
+            {% for code, name in categories %}
+                <a href="?category={{ code }}" class="filter-btn {% if selected_category == code %}active{% endif %}">{{ name }}</a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="scheme-grid">
+        {% for scheme in schemes %}
+        <div class="scheme-card">
+            <span class="scheme-badge">{{ scheme.get_category_display }}</span>
+            <h3>{{ scheme.title }}</h3>
+            <p>{{ scheme.description|truncatewords:30 }}</p>
+            <a href="{% url 'scheme_detail' scheme.pk %}" class="btn btn-primary">View Details</a>
+        </div>
+        {% empty %}
+        <p>No schemes available in this category.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
