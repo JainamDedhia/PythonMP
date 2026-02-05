@@ -1,6 +1,7 @@
 """
 File: welfare_system/settings.py
-PRODUCTION READY VERSION - Replace your entire settings.py with this
+UPDATED VERSION with CSRF_TRUSTED_ORIGINS
+Add this line after ALLOWED_HOSTS section
 """
 
 from pathlib import Path
@@ -21,6 +22,19 @@ ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(','
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
+# CSRF Trusted Origins (IMPORTANT FOR LOGOUT TO WORK)
+CSRF_TRUSTED_ORIGINS = [
+    'https://welfare-helpdek.onrender.com',
+    'https://*.onrender.com',  # Allows any Render subdomain
+]
+
+# Add localhost for development
+if DEBUG:
+    CSRF_TRUSTED_ORIGINS.extend([
+        'http://localhost:8000',
+        'http://127.0.0.1:8000',
+    ])
 
 INSTALLED_APPS = [
     'django.contrib.admin',
