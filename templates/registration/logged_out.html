@@ -1,0 +1,24 @@
+<!-- 
+File: templates/registration/logged_out.html
+CREATE this file in templates/registration/ folder
+This fixes the HTTP 405 logout error
+-->
+
+{% extends 'helpdesk/base.html' %}
+
+{% block title %}Logged Out - Digital Welfare Help Desk{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="form-container" style="text-align: center;">
+        <h2>✅ You have been logged out successfully</h2>
+        <p>Thank you for using Digital Welfare Help Desk.</p>
+        <p>Your session has been securely ended.</p>
+        
+        <div style="margin-top: 2rem;">
+            <a href="{% url 'home' %}" class="btn btn-primary">Go to Home</a>
+            <a href="{% url 'login' %}" class="btn btn-secondary">Login Again</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
