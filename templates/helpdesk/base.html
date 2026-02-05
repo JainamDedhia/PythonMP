@@ -1,6 +1,7 @@
 <!-- 
 File: templates/helpdesk/base.html
-CREATE this file in templates/helpdesk/ folder
+REPLACE your existing base.html with this FIXED version
+This uses POST method for logout to prevent HTTP 405 error
 -->
 
 <!DOCTYPE html>
@@ -25,7 +26,14 @@ CREATE this file in templates/helpdesk/ folder
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
                     <li><a href="{% url 'submit_complaint' %}">Submit Complaint</a></li>
-                    <li><a href="{% url 'logout' %}">Logout ({{ user.username }})</a></li>
+                    <li>
+                        <form method="post" action="{% url 'logout' %}" style="display: inline; margin: 0;">
+                            {% csrf_token %}
+                            <button type="submit" class="logout-btn">
+                                Logout ({{ user.username }})
+                            </button>
+                        </form>
+                    </li>
                 {% else %}
                     <li><a href="{% url 'login' %}">Login</a></li>
                     <li><a href="{% url 'register' %}">Register</a></li>
